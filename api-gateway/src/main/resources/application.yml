@@ -1,0 +1,23 @@
+server:
+  port: 8700
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/produtos,/produtos/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/pedidos,/pedidos/**
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
